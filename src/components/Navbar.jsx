@@ -22,7 +22,7 @@ import {
 const Navbar = () => {
   const {isAdmin , isAuthentic} = useAuth()
   const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   useEffect(() => {
     if (theme === 'light') {

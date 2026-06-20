@@ -138,9 +138,17 @@ const ProductCard =  ({limit, products}) => {
         </div>
       ) : (
         data && (displaylist = limit ? data.products.slice(0,limit) : data.products,
-        displaylist.map((product, index) => (
-          
-          <div key={product._id} className="group relative bg-[#1C1C1C] border border-white/10 hover:border-ochi-green/30 rounded-2xl p-5 transition-all duration-350 hover:scale-[1.01] flex flex-col justify-between h-full">
+        displaylist.map((product, index) => {
+          const isHomePage = window.location.pathname === '/';
+          const colParallax = isHomePage ? { 
+            transform: `translateY(calc(var(--scroll-y, 0px) * ${index % 2 === 0 ? '0.025' : '-0.025'}))`
+          } : {};
+          return (
+            <div 
+              key={product._id} 
+              className="group relative bg-[#1C1C1C] border border-white/10 hover:border-ochi-green/30 rounded-2xl p-3 sm:p-5 transition-all duration-350 hover:scale-[1.01] flex flex-col justify-between h-full"
+              style={colParallax}
+            >
             <div>
               {/* Favorite Button */}
               <button
@@ -173,7 +181,7 @@ const ProductCard =  ({limit, products}) => {
                     toast.error(err.message || "Could not update saved items");
                   }
                 }}
-                className={`absolute top-4 right-4 px-3 py-1 rounded-full border z-10 transition-all duration-300 font-mono text-[9px] uppercase tracking-wider cursor-pointer active:scale-95 ${
+                className={`absolute top-2.5 right-2.5 sm:top-4 sm:right-4 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border z-10 transition-all duration-300 font-mono text-[8px] sm:text-[9px] uppercase tracking-wider cursor-pointer active:scale-95 ${
                   favourites.includes(product._id)
                     ? 'bg-rose-500/10 border-rose-500/30 text-rose-400'
                     : 'bg-black/40 border-white/15 text-white/70 hover:bg-white hover:text-ochi-charcoal'
@@ -183,7 +191,7 @@ const ProductCard =  ({limit, products}) => {
               </button>
 
               {/* Product Image */}
-              <Link to={`/product/${product._id}`} className="block relative aspect-square w-full bg-[#262626] rounded-xl overflow-hidden mb-4 border border-white/5">
+              <Link to={`/product/${product._id}`} className="block relative aspect-square w-full bg-[#262626] rounded-xl overflow-hidden mb-3 sm:mb-4 border border-white/5">
                 <img
                   src={product.image_url}
                   alt={product.name}
@@ -192,7 +200,7 @@ const ProductCard =  ({limit, products}) => {
               </Link>
 
               {/* Brand & Category */}
-              <div className="flex items-center justify-between font-mono text-[10px] text-white/40 uppercase tracking-wider mb-2">
+              <div className="flex items-center justify-between font-mono text-[9px] sm:text-[10px] text-white/40 uppercase tracking-wider mb-1.5 sm:mb-2">
                 <span>{product.brand}</span>
                 <span className="text-ochi-green">
                   {product.category}
@@ -201,31 +209,32 @@ const ProductCard =  ({limit, products}) => {
 
               {/* Title */}
               <Link to={`/product/${product._id}`} className="block">
-                <h3 className="text-base font-black text-white hover:text-ochi-green transition-colors uppercase tracking-tight leading-tight line-clamp-1 mb-2">
+                <h3 className="text-sm sm:text-base font-black text-white hover:text-ochi-green transition-colors uppercase tracking-tight leading-tight line-clamp-1 mb-1.5 sm:mb-2">
                   {product.name}
                 </h3>
               </Link>
 
               {/* Rating */}
-              <div className="flex items-center gap-1.5 font-mono text-[10px] text-white/50 uppercase tracking-wider mb-4">
+              <div className="flex items-center gap-1 sm:gap-1.5 font-mono text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wider mb-3 sm:mb-4">
                 <span className="text-ochi-green">★</span>
                 <span>{product.rating}</span>
                 <span className="text-white/20">|</span>
-                <span className="text-white/30">{product.numReviews} Reviews</span>
+                <span className="text-white/30 hidden sm:inline">{product.numReviews} Reviews</span>
+                <span className="text-white/30 sm:hidden">{product.numReviews} Revs</span>
               </div>
             </div>
 
             {/* Price & Add to Cart */}
-            <div className="flex items-center justify-between pt-4 border-t border-white/10">
-              <div>
-                <span className="text-[10px] font-mono text-white/40 block uppercase tracking-wider">Price</span>
-                <span className="text-lg font-black text-white">${product.price}</span>
+            <div className="flex flex-col gap-2.5 pt-3 sm:flex-row sm:items-center sm:justify-between sm:pt-4 sm:gap-0 border-t border-white/10">
+              <div className="flex sm:block justify-between items-baseline w-full sm:w-auto">
+                <span className="text-[9px] sm:text-[10px] font-mono text-white/40 uppercase tracking-wider sm:block">Price</span>
+                <span className="text-sm sm:text-lg font-black text-white">${product.price}</span>
               </div>
               {isAdmin ? (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
                   <Link
                     to={`/admin/add-product?editing=true&id=${product._id}`}
-                    className="px-3 py-1.5 rounded-full border border-white/20 hover:bg-white hover:text-ochi-charcoal text-white transition-all font-mono text-[10px] uppercase tracking-wider"
+                    className="flex-1 sm:flex-initial text-center justify-center py-1.5 sm:px-3 sm:py-1.5 rounded-full border border-white/20 hover:bg-white hover:text-ochi-charcoal text-white transition-all font-mono text-[9px] sm:text-[10px] uppercase tracking-wider"
                   >
                     Edit
                   </Link>
@@ -235,7 +244,7 @@ const ProductCard =  ({limit, products}) => {
                       e.stopPropagation();
                       handleDelete(product._id);
                     }}
-                    className="px-3 py-1.5 rounded-full border border-rose-500/20 hover:bg-rose-600 hover:text-white text-rose-400 transition-all font-mono text-[10px] uppercase tracking-wider cursor-pointer"
+                    className="flex-1 sm:flex-initial text-center justify-center py-1.5 sm:px-3 sm:py-1.5 rounded-full border border-rose-500/20 hover:bg-rose-600 hover:text-white text-rose-400 transition-all font-mono text-[9px] sm:text-[10px] uppercase tracking-wider cursor-pointer"
                   >
                     Delete
                   </button>
@@ -252,7 +261,7 @@ const ProductCard =  ({limit, products}) => {
                       setCartItems([...cartItems, product._id])
                     }
                   }}
-                  className={`px-4 py-2 rounded-full border font-mono text-[10px] uppercase tracking-wider transition-all duration-300 transform active:scale-95 cursor-pointer ${
+                  className={`w-full sm:w-auto text-center justify-center flex py-2 sm:px-4 sm:py-2 rounded-full border font-mono text-[9px] sm:text-[10px] uppercase tracking-wider transition-all duration-300 transform active:scale-95 cursor-pointer ${
                     cartItems.includes(product._id)
                       ? 'bg-ochi-green border-ochi-green text-ochi-charcoal'
                       : 'border-white/25 hover:border-ochi-green hover:bg-ochi-green hover:text-ochi-charcoal text-white'
@@ -263,7 +272,8 @@ const ProductCard =  ({limit, products}) => {
               )}
             </div>
           </div>
-        )))
+        );
+      }))
       )}
     </>
   );

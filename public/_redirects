@@ -1,0 +1,5 @@
+# Proxy API requests to backend
+/api/*  https://shopnest-backend-hdc8.onrender.com/api/:splat  200!
+
+# SPA Routing: Redirect all other requests to index.html
+/*      /index.html                                            200

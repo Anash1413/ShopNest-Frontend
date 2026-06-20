@@ -6,6 +6,7 @@
   --bg-primary: #212121;
   --bg-secondary: #1C1C1C;
   --bg-cream: #F1F1F1;
+  --ochi-cream: #F1F1F1;
   --text-primary: #ffffff;
   --text-secondary: #F1F1F1;
   --text-muted: #7F7F7F;
@@ -14,39 +15,29 @@
 }
 
 body.light {
-  --bg-primary: #F1F1F1;
-  --bg-secondary: #ffffff;
+  --bg-primary: #F5F5F3;      /* Light cream/gray background */
+  --bg-secondary: #ffffff;    /* Pure white background for cards & boxes */
   --bg-cream: #212121;
-  --text-primary: #212121;
-  --text-secondary: #1C1C1C;
-  --text-muted: #6B7280;
+  --ochi-cream: #EFEFEE;      /* Warm off-white segment background */
+  --text-primary: #212121;    /* Dark charcoal text color */
+  --text-secondary: #1C1C1C;  /* Darker title text color */
+  --text-muted: #555555;      /* Dark gray for secondary labels/descriptions */
   --border-primary: rgba(0, 0, 0, 0.1);
   --border-secondary: rgba(0, 0, 0, 0.05);
+}
+
+@media (max-w: 639px) {
+  :root {
+    --scroll-y: 0px !important;
+  }
 }
 
 @theme {
   --color-ochi-black: var(--bg-secondary);
   --color-ochi-charcoal: var(--bg-primary);
   --color-ochi-green: #CDEA68;
-  --color-ochi-cream: var(--text-secondary);
+  --color-ochi-cream: var(--ochi-cream);
   --color-ochi-gray: var(--text-muted);
-  --color-white: var(--text-primary);
-  --color-black: var(--bg-secondary);
-
-  --color-slate-100: var(--text-primary);
-  --color-slate-200: var(--text-primary);
-  --color-slate-350: var(--text-secondary);
-  --color-slate-300: var(--text-secondary);
-  --color-slate-400: var(--text-secondary);
-  --color-slate-450: var(--text-secondary);
-  --color-slate-500: var(--text-secondary);
-  --color-slate-550: var(--text-muted);
-  --color-slate-600: var(--text-muted);
-  --color-slate-700: var(--border-primary);
-  --color-slate-800: var(--border-primary);
-  --color-slate-850: var(--border-secondary);
-  --color-slate-900: var(--bg-secondary);
-  --color-slate-950: var(--bg-secondary);
 
   --font-sans: "Outfit", sans-serif;
   --font-mono: "Space Mono", monospace;
@@ -104,45 +95,182 @@ body.light .dot-grid-pattern {
   background-image: radial-gradient(rgba(33, 33, 33, 0.08) 1.5px, transparent 1.5px);
 }
 
-/* Light theme overrides for Tailwind compiled arbitrary background and text classes */
-body.light [class*="bg-[#1C1C1C]"],
-body.light [class*="bg-[#1c1c1c]"] {
-  background-color: var(--bg-secondary) !important;
+/* Always Dark Containers (forces dark colors even in light mode) */
+.always-dark,
+.always-dark * {
+  --bg-primary: #212121 !important;
+  --bg-secondary: #1C1C1C !important;
+  --bg-cream: #F1F1F1 !important;
+  --ochi-cream: #F1F1F1 !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #F1F1F1 !important;
+  --text-muted: #7F7F7F !important;
+  --border-primary: rgba(255, 255, 255, 0.1) !important;
+  --border-secondary: rgba(255, 255, 255, 0.05) !important;
+
+  --color-white: #ffffff !important;
+  --color-black: #212121 !important;
+
+  --color-ochi-charcoal: #212121 !important;
+  --color-ochi-black: #1C1C1C !important;
+  --color-ochi-cream: #F1F1F1 !important;
+  --color-ochi-gray: #7F7F7F !important;
+
+  --color-slate-100: #ffffff !important;
+  --color-slate-200: #ffffff !important;
+  --color-slate-350: #F1F1F1 !important;
+  --color-slate-300: #F1F1F1 !important;
+  --color-slate-400: #F1F1F1 !important;
+  --color-slate-450: #F1F1F1 !important;
+  --color-slate-500: #F1F1F1 !important;
+  --color-slate-550: #7F7F7F !important;
+  --color-slate-600: #7F7F7F !important;
+  --color-slate-700: rgba(255, 255, 255, 0.1) !important;
+  --color-slate-800: rgba(255, 255, 255, 0.1) !important;
+  --color-slate-850: rgba(255, 255, 255, 0.05) !important;
+  --color-slate-900: #1C1C1C !important;
+  --color-slate-950: #1C1C1C !important;
 }
 
-body.light [class*="bg-[#212121]"] {
-  background-color: var(--bg-primary) !important;
+/* Force Tailwind v4 compiled properties to re-evaluate on light elements */
+body.light *:not(.always-dark):not(.always-dark *) {
+  --color-ochi-charcoal: var(--bg-primary) !important;
+  --color-ochi-black: var(--bg-secondary) !important;
+  --color-ochi-cream: var(--ochi-cream) !important;
+  --color-ochi-gray: var(--text-muted) !important;
+  
+  /* Force Tailwind v4 compiled white utility classes (text, borders, divide) to map to charcoal */
+  --color-white: var(--text-primary) !important;
 }
 
-body.light [class*="bg-[#262626]"] {
-  background-color: var(--border-secondary) !important;
+/* Explicitly target text variants of custom theme colors to stay dark in light mode */
+body.light .text-ochi-charcoal,
+body.light [class*="text-ochi-charcoal"]:not(.always-dark) {
+  color: var(--text-primary) !important;
 }
 
-body.light [class*="text-[#F1F1F1]"],
-body.light [class*="text-[#f1f1f1]"] {
+body.light .text-ochi-black,
+body.light [class*="text-ochi-black"]:not(.always-dark) {
   color: var(--text-secondary) !important;
 }
 
-body.light [class*="text-white/40"],
-body.light [class*="text-white/50"],
-body.light [class*="text-white/70"] {
-  color: var(--text-muted) !important;
+body.light .text-ochi-cream,
+body.light [class*="text-ochi-cream"]:not(.always-dark) {
+  color: var(--text-secondary) !important;
 }
 
-body.light [class*="border-white/10"],
-body.light [class*="border-white/5"] {
+/* Preserve standard white background utilities to remain pure white */
+body.light .bg-white,
+body.light [class*="bg-white"]:not(.always-dark) {
+  background-color: var(--bg-secondary) !important; /* white */
+}
+
+body.light [class*="hover:bg-white"]:hover:not(.always-dark) {
+  background-color: var(--bg-secondary) !important; /* white */
+}
+
+body.light .group:hover [class*="group-hover:bg-white"]:not(.always-dark) {
+  background-color: var(--bg-secondary) !important; /* white */
+}
+
+/* Explicitly target text white colors under light mode */
+body.light .text-white:not(.always-dark):not(.always-dark *),
+body.light .text-white\/90:not(.always-dark):not(.always-dark *),
+body.light .text-white\/80:not(.always-dark):not(.always-dark *),
+body.light .text-white\/70:not(.always-dark):not(.always-dark *),
+body.light .text-white\/60:not(.always-dark):not(.always-dark *),
+body.light [class*="text-white"]:not(.always-dark):not(.always-dark *):not([class*="text-white/"]) {
+  color: var(--text-primary) !important;
+}
+
+body.light .text-white\/50:not(.always-dark):not(.always-dark *),
+body.light .text-white\/45:not(.always-dark):not(.always-dark *),
+body.light .text-white\/40:not(.always-dark):not(.always-dark *),
+body.light .text-white\/35:not(.always-dark):not(.always-dark *),
+body.light .text-white\/30:not(.always-dark):not(.always-dark *),
+body.light .text-white\/25:not(.always-dark):not(.always-dark *),
+body.light .text-white\/20:not(.always-dark):not(.always-dark *),
+body.light .text-white\/15:not(.always-dark):not(.always-dark *),
+body.light .text-white\/10:not(.always-dark):not(.always-dark *),
+body.light .text-white\/5:not(.always-dark):not(.always-dark *) {
+  color: rgba(33, 33, 33, 0.55) !important;
+}
+
+/* Explicitly target border white colors under light mode */
+body.light .border-white:not(.always-dark):not(.always-dark *),
+body.light .border-white\/90:not(.always-dark):not(.always-dark *),
+body.light .border-white\/80:not(.always-dark):not(.always-dark *),
+body.light .border-white\/70:not(.always-dark):not(.always-dark *),
+body.light .border-white\/60:not(.always-dark):not(.always-dark *),
+body.light .border-white\/50:not(.always-dark):not(.always-dark *),
+body.light .border-white\/40:not(.always-dark):not(.always-dark *),
+body.light .border-white\/30:not(.always-dark):not(.always-dark *),
+body.light .border-white\/20:not(.always-dark):not(.always-dark *),
+body.light .border-white\/15:not(.always-dark):not(.always-dark *),
+body.light .border-white\/10:not(.always-dark):not(.always-dark *),
+body.light .border-white\/5:not(.always-dark):not(.always-dark *),
+body.light [class*="border-white"]:not(.always-dark):not(.always-dark *) {
   border-color: var(--border-primary) !important;
 }
 
-body.light [class*="bg-[#212121]/40"] {
+/* Wildcard overrides for background opacities in light mode */
+body.light [class*="bg-white/"]:not(.always-dark),
+body.light [class*="bg-white/["]:not(.always-dark) {
+  background-color: var(--border-secondary) !important;
+}
+
+/* Wildcard overrides for divide opacity in light mode */
+body.light [class*="divide-white/"]:not(.always-dark) > :not(:last-child) {
+  border-color: var(--border-primary) !important;
+}
+
+/* Wildcard overrides for placeholder text in light mode */
+body.light [class*="placeholder-white/"]:not(.always-dark)::placeholder {
+  color: rgba(33, 33, 33, 0.4) !important;
+}
+
+/* Custom background overrides */
+body.light [class*="bg-[#1C1C1C]"]:not(.always-dark),
+body.light [class*="bg-[#1c1c1c]"]:not(.always-dark) {
+  background-color: var(--bg-secondary) !important;
+}
+
+body.light [class*="bg-[#212121]"]:not(.always-dark) {
+  background-color: var(--bg-primary) !important;
+}
+
+body.light [class*="bg-[#262626]"]:not(.always-dark) {
+  background-color: var(--border-secondary) !important;
+}
+
+body.light [class*="text-[#F1F1F1]"]:not(.always-dark),
+body.light [class*="text-[#f1f1f1]"]:not(.always-dark) {
+  color: var(--text-secondary) !important;
+}
+
+/* Wildcard overrides for black background opacity overlay elements (keeps them dark) */
+body.light [class*="bg-black/"] {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light [class*="bg-black/50"],
+body.light [class*="bg-black/60"],
+body.light [class*="bg-black/65"],
+body.light [class*="bg-black/75"] {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  --color-white: #ffffff !important;
+  --text-primary: #ffffff !important;
+}
+
+body.light [class*="bg-[#212121]/40"]:not(.always-dark) {
   background-color: rgba(33, 33, 33, 0.05) !important;
 }
 
 /* Ensure text on elements with ochi-green background is always dark charcoal for readability unless hovered */
-body.light .bg-ochi-green:not(:hover),
-body.light [class*="bg-ochi-green"]:not(:hover),
-body .bg-ochi-green:not(:hover),
-body [class*="bg-ochi-green"]:not(:hover) {
+body.light .bg-ochi-green:not(.always-dark):not(.always-dark *):not(:hover),
+body.light [class*="bg-ochi-green"]:not(.always-dark):not(.always-dark *):not(:hover),
+body .bg-ochi-green:not(.always-dark):not(.always-dark *):not(:hover),
+body [class*="bg-ochi-green"]:not(.always-dark):not(.always-dark *):not(:hover) {
   --color-ochi-charcoal: #212121 !important;
   --color-white: #212121 !important;
   --color-ochi-cream: #ffffff !important;
@@ -169,4 +297,21 @@ body.light [role="status"] > div {
   color: var(--text-primary) !important;
   border: 1px solid var(--border-primary) !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Ensure red/rose/emerald buttons and alerts always keep their white text color for contrast */
+[class*="bg-rose-"],
+[class*="bg-red-"],
+[class*="bg-emerald-"],
+[class*="bg-green-"] {
+  --color-white: #ffffff !important;
+}
+
+/* Ensure dark buttons inside ochi-green containers (like CTA banner) keep their text readable in light mode */
+body.light [class*="bg-ochi-green"] [class*="bg-ochi-charcoal"],
+body.light [class*="bg-ochi-green"] [class*="bg-ochi-black"],
+body.light .bg-ochi-green [class*="bg-ochi-charcoal"],
+body.light .bg-ochi-green [class*="bg-ochi-black"] {
+  --color-white: #ffffff !important;
+  --text-primary: #ffffff !important;
 }

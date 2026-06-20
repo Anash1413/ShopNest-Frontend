@@ -34,7 +34,7 @@ const Footer = () => {
   const [activeModal, setActiveModal] = useState(null); // 'about' | 'contact' | null
 
   return (
-    <footer className="w-full bg-[#1C1C1C] border-t border-white/10 text-white/70 py-16 mt-20 font-sans">
+    <footer className="w-full bg-[#1C1C1C] border-t border-white/10 text-white/70 py-16 mt-20 font-sans always-dark">
       <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
         
         {/* Left Column: Big Typographic Brand Statement */}
@@ -127,7 +127,7 @@ const Footer = () => {
       {/* 1. About Us Modal */}
       {activeModal === 'about' && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/75 backdrop-blur-md">
-          <div className="relative w-full max-w-3xl bg-[#212121] border border-white/10 rounded-2xl p-8 md:p-12 max-h-[85vh] overflow-y-auto shadow-2xl flex flex-col gap-8 scrollbar-thin scrollbar-thumb-white/10 text-left">
+          <div className="relative w-full max-w-3xl bg-[#212121] border border-white/10 rounded-2xl p-8 md:p-12 max-h-[85vh] overflow-y-auto shadow-2xl flex flex-col gap-8 scrollbar-thin scrollbar-thumb-white/10 text-left always-dark">
             {/* Close Button */}
             <button 
               onClick={() => setActiveModal(null)}
@@ -223,7 +223,7 @@ const Footer = () => {
       {/* 2. Contact Us Modal */}
       {activeModal === 'contact' && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/75 backdrop-blur-md">
-          <div className="relative w-full max-w-lg bg-[#212121] border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl flex flex-col gap-8 text-left">
+          <div className="relative w-full max-w-lg bg-[#212121] border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl flex flex-col gap-8 text-left always-dark">
             {/* Close Button */}
             <button 
               onClick={() => setActiveModal(null)}

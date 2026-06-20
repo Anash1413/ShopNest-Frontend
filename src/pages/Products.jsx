@@ -287,7 +287,7 @@ function Products() {
                   <p className="text-white/35 font-mono text-xs max-w-xs mx-auto leading-relaxed">We couldn't find any products matching your search criteria.</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
                   <ProductCard products={filteredProducts} />
                 </div>
               )}
