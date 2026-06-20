@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800;900&family=Space+Mono:wght@400;700&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #212121;
+  --bg-secondary: #1C1C1C;
+  --bg-cream: #F1F1F1;
+  --text-primary: #ffffff;
+  --text-secondary: #F1F1F1;
+  --text-muted: #7F7F7F;
+  --border-primary: rgba(255, 255, 255, 0.1);
+  --border-secondary: rgba(255, 255, 255, 0.05);
+}
+
+body.light {
+  --bg-primary: #F1F1F1;
+  --bg-secondary: #ffffff;
+  --bg-cream: #212121;
+  --text-primary: #212121;
+  --text-secondary: #1C1C1C;
+  --text-muted: #6B7280;
+  --border-primary: rgba(0, 0, 0, 0.1);
+  --border-secondary: rgba(0, 0, 0, 0.05);
+}
+
+@theme {
+  --color-ochi-black: var(--bg-secondary);
+  --color-ochi-charcoal: var(--bg-primary);
+  --color-ochi-green: #CDEA68;
+  --color-ochi-cream: var(--text-secondary);
+  --color-ochi-gray: var(--text-muted);
+  --color-white: var(--text-primary);
+  --color-black: var(--bg-secondary);
+
+  --color-slate-100: var(--text-primary);
+  --color-slate-200: var(--text-primary);
+  --color-slate-350: var(--text-secondary);
+  --color-slate-300: var(--text-secondary);
+  --color-slate-400: var(--text-secondary);
+  --color-slate-450: var(--text-secondary);
+  --color-slate-500: var(--text-secondary);
+  --color-slate-550: var(--text-muted);
+  --color-slate-600: var(--text-muted);
+  --color-slate-700: var(--border-primary);
+  --color-slate-800: var(--border-primary);
+  --color-slate-850: var(--border-secondary);
+  --color-slate-900: var(--bg-secondary);
+  --color-slate-950: var(--bg-secondary);
+
+  --font-sans: "Outfit", sans-serif;
+  --font-mono: "Space Mono", monospace;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar to match Ochi style */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ochi-green);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b5d554;
+}
+
+/* Custom selection */
+::selection {
+  background-color: var(--color-ochi-green);
+  color: #1C1C1C;
+}
+
+/* Infinite Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 20s linear infinite;
+}
+
+/* --- Dotted Grid Background --- */
+.dot-grid-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+  will-change: transform;
+}
+
+body.light .dot-grid-pattern {
+  background-image: radial-gradient(rgba(33, 33, 33, 0.08) 1.5px, transparent 1.5px);
+}
+
+/* Light theme overrides for Tailwind compiled arbitrary background and text classes */
+body.light [class*="bg-[#1C1C1C]"],
+body.light [class*="bg-[#1c1c1c]"] {
+  background-color: var(--bg-secondary) !important;
+}
+
+body.light [class*="bg-[#212121]"] {
+  background-color: var(--bg-primary) !important;
+}
+
+body.light [class*="bg-[#262626]"] {
+  background-color: var(--border-secondary) !important;
+}
+
+body.light [class*="text-[#F1F1F1]"],
+body.light [class*="text-[#f1f1f1]"] {
+  color: var(--text-secondary) !important;
+}
+
+body.light [class*="text-white/40"],
+body.light [class*="text-white/50"],
+body.light [class*="text-white/70"] {
+  color: var(--text-muted) !important;
+}
+
+body.light [class*="border-white/10"],
+body.light [class*="border-white/5"] {
+  border-color: var(--border-primary) !important;
+}
+
+body.light [class*="bg-[#212121]/40"] {
+  background-color: rgba(33, 33, 33, 0.05) !important;
+}
+
+/* Ensure text on elements with ochi-green background is always dark charcoal for readability unless hovered */
+body.light .bg-ochi-green:not(:hover),
+body.light [class*="bg-ochi-green"]:not(:hover),
+body .bg-ochi-green:not(:hover),
+body [class*="bg-ochi-green"]:not(:hover) {
+  --color-ochi-charcoal: #212121 !important;
+  --color-white: #212121 !important;
+  --color-ochi-cream: #ffffff !important;
+}
+
+/* SweetAlert Popups Theme Overrides */
+body.light .swal2-popup {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-primary) !important;
+}
+
+body.light .swal2-title {
+  color: var(--text-primary) !important;
+}
+
+body.light .swal2-html-container {
+  color: var(--text-muted) !important;
+}
+
+/* React Hot Toast Theme Overrides */
+body.light [role="status"] > div {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-primary) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
